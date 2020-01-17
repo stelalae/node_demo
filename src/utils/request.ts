@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ResponseData } from '../defines';
 
 // axios.defaults.timeout = 10000;
 
@@ -22,12 +21,10 @@ const parseResponse = (response: any) => {
 };
 
 export const request = async (options: any): Promise<any> => {
-  // return Promise.resolve(
-  //   new ResponseData({
-  //     code: 999,
-  //     msg: '网络超时',
-  //   }),
-  // );
+  // return Promise.resolve({
+  //   code: 999,
+  //   msg: '网络超时',
+  // });
   try {
     const resp = await axios(options);
     const data = await parseResponse(resp);
