@@ -206,7 +206,12 @@ export class Service {
   }
 }
 
+
 export class TestModel extends Service {
+  constructor(data: TestModel) {
+    super();
+    console.log('=== constructor', data.a);
+  }
   static url = 'http://localhost:3000/test';
 
   a = 1;
@@ -241,7 +246,7 @@ export class ServiceManager {
    * 接口请求
    */
   public static async post(
-    modal: any,
+    modal: typeof Service,
     body?: any,
     options: ApiOptons = new ApiOptons(),
   ) {
@@ -262,8 +267,8 @@ export class ServiceManager {
     }
   }
 
-  public static async get<T extends Service>(
-    modal: any,
+  public static async get(
+    modal: typeof Service,
     params?: any,
     options: ApiOptons = new ApiOptons(),
   ) {

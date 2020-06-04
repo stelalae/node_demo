@@ -14,13 +14,13 @@ export class AppController {
 
   @Get('/test')
   test(): ResponseData<TestModel> {
-    return { code: 0, message: '1', data: { a: 1 } };
+    return { code: 0, message: '1', data: { a: 2 } };
   }
 
   @Get('/data')
   data() {
     ServiceManager.get(TestModel, {}, { onlyData: false }).then(data =>
-      console.log(data),
+      console.log(typeof data, data),
     );
     return 'ok';
   }
