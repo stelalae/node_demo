@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
-import { ResponseData, TestModel, ServiceManager } from './utils';
+import { ResponseData, TestModel } from './utils';
 
 @Controller()
 export class AppController {
@@ -19,7 +19,7 @@ export class AppController {
 
   @Get('/data')
   data() {
-    ServiceManager.get(TestModel, {}, { onlyData: false }).then(data =>
+    TestModel.get({}, { onlyData: false }).then(data =>
       console.log(typeof data, data),
     );
     return 'ok';

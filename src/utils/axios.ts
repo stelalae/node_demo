@@ -204,23 +204,6 @@ export class Service {
     }
     return true;
   }
-}
-
-
-export class TestModel extends Service {
-  constructor(data: TestModel) {
-    super();
-    console.log('=== constructor', data.a);
-  }
-  static url = 'http://localhost:3000/test';
-
-  a = 1;
-}
-
-export class ServiceManager {
-  public static set userInfo(v: any) {
-    ServiceBase.userInfo = v ?? {};
-  }
 
   /**
    * 解析响应
@@ -246,7 +229,8 @@ export class ServiceManager {
    * 接口请求
    */
   public static async post(
-    modal: typeof Service,
+    url: string,
+    modal: any,
     body?: any,
     options: ApiOptons = new ApiOptons(),
   ) {
@@ -260,15 +244,16 @@ export class ServiceManager {
     }
 
     try {
-      const response = await request.post(modal.url, body);
-      return ServiceManager.parse(modal, response, options);
+      const response = await request.post(url, body);
+      return Service.parse(modal, response, options);
     } catch (err) {
       return err;
     }
   }
 
   public static async get(
-    modal: typeof Service,
+    url: string,
+    modal: any,
     params?: any,
     options: ApiOptons = new ApiOptons(),
   ) {
@@ -278,10 +263,23 @@ export class ServiceManager {
     const a = new ServiceAxios(options);
 
     try {
-      const response = await a.get(modal.url, params);
-      return ServiceManager.parse(modal, response, options);
+      const response = await a.get(url, params);
+      return Service.parse(modal, response, options);
     } catch (err) {
       return err;
     }
   }
+}
+
+export class TestModel extends Service {
+  constructor(data: TestModel) {
+    super();
+    console.log('=== constructor', data.a);
+  }
+
+  static get(params: any, options: ApiOptons) {
+    return super.get('http://localhost:3000/test', TestModel, params, options);
+  }
+
+  a = 1;
 }
