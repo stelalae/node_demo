@@ -213,7 +213,12 @@ export class ServiceManager {
       const response = await request.post(url, body);
       return ServiceManager.parse<T>(modal, response, options);
     } catch (err) {
-      return err;
+      // 记录错误日志
+      console.log(url, body, options, err);
+      return {
+        code: codeUnknownTask,
+        message: '内部错误，请稍后再试',
+      };
     }
   }
 
@@ -242,7 +247,12 @@ export class ServiceManager {
       const response = await a.get(url, params);
       return ServiceManager.parse<T>(modal, response, options);
     } catch (err) {
-      return err;
+      // 记录错误日志
+      console.log(url, params, options, err);
+      return {
+        code: codeUnknownTask,
+        message: '内部错误，请稍后再试',
+      };
     }
   }
 }

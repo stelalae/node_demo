@@ -22,7 +22,7 @@ export class AppController {
     // 返回类型请见 ResultDataType
     console.log('默认接口配置项：', new ApiOptons());
 
-    TestModel.get({}).then((data: ResponseData) =>
+    TestModel.get().then((data: ResponseData) =>
       setTimeout(
         () =>
           console.log(
