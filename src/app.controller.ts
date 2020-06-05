@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
+import { AppService } from './app.service';
 import { ResponseData, TestModel, ApiOptons } from './model';
 
 @Controller()
@@ -14,7 +14,7 @@ export class AppController {
 
   @Get('/test')
   test() {
-    return { code: 0, message: '1', data: { a: 12 } };
+    return { code: 0, message: '1', data: { a: 'hello world', sex: 1 } };
   }
 
   @Get('/data')
@@ -37,7 +37,7 @@ export class AppController {
     TestModel.get(
       {},
       { auth: false, onlyData: false },
-    ).then((data: ResponseData) =>
+    ).then((data: ResponseData<TestModel>) =>
       setTimeout(
         () =>
           console.log(
@@ -49,13 +49,15 @@ export class AppController {
       ),
     );
 
-    TestModel.get(
-      {},
-      { auth: false, onlyData: true },
-    ).then((data: ResponseData) =>
+    TestModel.get({}, { auth: false, onlyData: true }).then((data: TestModel) =>
       setTimeout(
         () =>
-          console.log('仅返回关键数据data，返回 T 或 T[]：', typeof data, data),
+          console.log(
+            '仅返回关键数据data，返回 T 或 T[]：',
+            typeof data,
+            data,
+            data.sexText(),
+          ),
         3000,
       ),
     );

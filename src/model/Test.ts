@@ -4,7 +4,8 @@ import { ApiOptons, ResponseData, ResultDataType } from './Common';
 import { ServiceManager } from './Service';
 
 const TestModelDefault = {
-  a: 1,
+  a: 'test string',
+  sex: 0,
 };
 
 export class TestModel extends Record(TestModelDefault) {
@@ -17,7 +18,13 @@ export class TestModel extends Record(TestModelDefault) {
     );
   }
 
-  sex() {
-    return '男';
+  static sexMap = {
+    0: '保密',
+    1: '男',
+    2: '女',
+  };
+
+  sexText() {
+    return TestModel.sexMap[this.sex] ?? '保密';
   }
 }
