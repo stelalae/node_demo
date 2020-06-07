@@ -33,7 +33,7 @@ export class AppController {
     // 返回类型请见 ResultDataType
     console.log('默认接口配置项：', new ApiOptons());
 
-    SimpleModel.get().then((data: ResponseData) =>
+    SimpleModel.get({ id: '1' }).then((data: ResponseData) =>
       setTimeout(
         () =>
           console.log(
@@ -46,7 +46,7 @@ export class AppController {
     );
 
     SimpleModel.get(
-      {},
+      { id: '1' },
       { auth: false, onlyData: false },
     ).then((data: ResponseData<SimpleModel>) =>
       setTimeout(
@@ -61,7 +61,7 @@ export class AppController {
     );
 
     SimpleModel.get(
-      {},
+      { id: '1' },
       { auth: false, onlyData: true },
     ).then((data: SimpleModel) =>
       setTimeout(
@@ -69,7 +69,7 @@ export class AppController {
           console.log(
             '仅返回关键数据data，返回 T 或 T[]：',
             typeof data,
-            data,
+            data.toObject(),
             data.sexText(),
           ),
         3000,
@@ -83,7 +83,7 @@ export class AppController {
     // 返回类型请见 ResultDataType
     console.log('默认接口配置项：', new ApiOptons());
 
-    ComplexModel.get().then((data: ResponseData) =>
+    ComplexModel.get({ id: '2' }).then((data: ResponseData) =>
       setTimeout(
         () =>
           console.log(
@@ -96,7 +96,7 @@ export class AppController {
     );
 
     ComplexModel.get(
-      {},
+      { id: '2' },
       { auth: false, onlyData: false },
     ).then((data: ResponseData<ComplexModel>) =>
       setTimeout(
@@ -111,7 +111,7 @@ export class AppController {
     );
 
     ComplexModel.get(
-      {},
+      { id: '2' },
       { auth: false, onlyData: true },
     ).then((data: ComplexModel) =>
       setTimeout(

@@ -12,8 +12,12 @@ const SimpleModelDefault = {
   sex: 0,
 };
 
+interface SimpleModelParams {
+  id: string;
+}
+
 export class SimpleModel extends Record(SimpleModelDefault) {
-  static async get(params?: any, options?: ApiOptons) {
+  static async get(params: SimpleModelParams, options?: ApiOptons) {
     return await ServiceManager.get<SimpleModel>(
       SimpleModel,
       'http://localhost:3000/test',
@@ -32,6 +36,16 @@ export class SimpleModel extends Record(SimpleModelDefault) {
     return SimpleModel.sexMap[this.sex] ?? '保密';
   }
 }
+
+const sexMap = {
+  0: '保密',
+  1: '男',
+  2: '女',
+};
+
+const sexText = (sex: number) => {
+  return sexMap[sex] ?? '保密';
+};
 
 /**
  * 复杂类型
@@ -53,14 +67,14 @@ const ComplexChildThirdDefault = {
   lastId: '20200607',
 };
 
-const ComplexItemDefaultObj = {
-  userNo: 'us1212',
-  userProfile: ComplexChildOneDefault,
-  extraFirst: ComplexChildTwoDefault,
-  extraTwo: ComplexChildThirdDefault,
-};
+// const ComplexItemDefault = {
+//   userNo: 'us1212',
+//   userProfile: ComplexChildOneDefault,
+//   extraFirst: ComplexChildTwoDefault,
+//   extraTwo: ComplexChildThirdDefault,
+// };
 
-// 复合类型建议使用class，而不是object。因为object里不能添加可选属性?
+// 复合类型建议使用class，而不是上面的object。因为object里不能添加可选属性?
 class ComplexItemDefault {
   userNo = 'us1212';
   userProfile = ComplexChildOneDefault;
@@ -68,12 +82,12 @@ class ComplexItemDefault {
   extraSecond? = ComplexChildThirdDefault;
 }
 
-const ComplexListDefaultObj = {
-  list: [],
-  pageNo: 1,
-  pageSize: 10,
-  pageTotal: 0,
-};
+// const ComplexListDefault = {
+//   list: [],
+//   pageNo: 1,
+//   pageSize: 10,
+//   pageTotal: 0,
+// };
 
 // 有数组的复合类型，如果要指定数组元素的Model，就必须用class
 class ComplexListDefault {
@@ -83,8 +97,13 @@ class ComplexListDefault {
   pageTotal = 0;
 }
 
+interface ComplexModelParams {
+  id: string;
+}
+
+// 因为使用的class，所以需要 new 一个去初始化Record
 export class ComplexModel extends Record(new ComplexListDefault()) {
-  static async get(params?: any, options?: ApiOptons) {
+  static async get(params: ComplexModelParams, options?: ApiOptons) {
     return await ServiceManager.get<ComplexModel>(
       ComplexModel,
       'http://localhost:3000/test2',
